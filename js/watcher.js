@@ -8,16 +8,17 @@ class Watcher {
         // 把watcher对象记录到Dep类的静态属性target
         Dep.target = this
         // 触发get方法，在get方法中会调用addSub
-        this.oldValue = vm[key]
+        this.newValue = this.vm[this.key]
         Dep.target = null
     }
 
     // 当数据发生变化的时候，更新视图
     update() {
-        let newValue = this.vm[this.key]
-        if (this.oldValue === newValue) {
+        const oldValue = this.newValue
+        this.newValue = this.vm[this.key]
+        if (oldValue === this.newValue) {
             return
         } 
-        this.cb(newValue)
+        this.cb(this.newValue)
     }
 }
